@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'co.uzzu.dotenv.gradle' version '2.0.0'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 group = 'com.molruexception'
@@ -19,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT'
+    compileOnly 'io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT'
 }
 
 def targetJavaVersion = 17
@@ -48,7 +49,7 @@ processResources {
 }
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(19))
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
 compileJava.options.encoding = 'UTF-8'
@@ -57,6 +58,13 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 jar {
+    archiveFileName = project.name + ".jar"
+    if (env.isPresent('JAR_DIR')) {
+        destinationDirectory.set(file(env.fetch('JAR_DIR')))
+    }
+}
+
+shadowJar {
     archiveFileName = project.name + ".jar"
     if (env.isPresent('JAR_DIR')) {
         destinationDirectory.set(file(env.fetch('JAR_DIR')))
