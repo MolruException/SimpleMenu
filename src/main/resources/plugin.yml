@@ -1,0 +1,5 @@
+name: SimpleMenu
+version: '${version}'
+main: com.molruexception.simplemenu.SimpleMenu
+api-version: 1.19
+authors: [ Lede ]
